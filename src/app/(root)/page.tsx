@@ -102,7 +102,7 @@ export default function DashboardPage() {
           <div className="border border-zinc-800 bg-zinc-900/30 rounded-lg p-12 text-center">
             {viewMode === "created" && (
               <>
-                <p className="text-zinc-400 mb-4">You haven't created any tracks yet.</p>
+                <p className="text-zinc-400 mb-4">You havent created any tracks yet.</p>
                 <Link
                   href="/your-tracks/new"
                   className="inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 transition-colors"
@@ -113,7 +113,7 @@ export default function DashboardPage() {
             )}
             {viewMode === "saved" && (
               <>
-                <p className="text-zinc-400 mb-4">You haven't saved any tracks yet.</p>
+                <p className="text-zinc-400 mb-4">You havent saved any tracks yet.</p>
                 <Link
                   href="/explore"
                   className="inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 transition-colors"

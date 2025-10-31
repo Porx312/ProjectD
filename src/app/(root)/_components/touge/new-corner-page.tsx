@@ -3,7 +3,7 @@
 import type React from "react"
 import { useMutation, useQuery } from "convex/react"
 import { useUser } from "@clerk/nextjs"
-import { useRouter, useParams } from "next/navigation"
+import {  useParams } from "next/navigation"
 import { useState } from "react"
 import Link from "next/link"
 import { MousePointer2, Lock } from "lucide-react"
