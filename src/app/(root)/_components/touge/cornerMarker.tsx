@@ -5,13 +5,7 @@ import { Edit2, Trash2 } from "lucide-react"
 import type React from "react"
 import type { Id } from "../../../../../convex/_generated/dataModel"
 
-interface Corner {
-  _id: Id<"corners">
-  cornerNumber: number
-  name: string
-  positionX: number
-  positionY: number
-}
+
 
 interface CornerMarkerProps {
   corner: {

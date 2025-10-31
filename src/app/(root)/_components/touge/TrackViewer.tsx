@@ -24,7 +24,7 @@ interface TrackViewerProps {
   mapImageUrl?: string
 }
 
-export function TrackViewer({ trackId, corners, mapImageUrl }: TrackViewerProps) {
+export function TrackViewer({  corners, mapImageUrl }: TrackViewerProps) {
   const [selectedCorner, setSelectedCorner] = useState<Corner | null>(null)
 
   return (

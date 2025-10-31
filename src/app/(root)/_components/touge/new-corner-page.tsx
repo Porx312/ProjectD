@@ -40,7 +40,6 @@ export default function NewCornerPage() {
   const [hoveredCorner, setHoveredCorner] = useState<Id<"corners"> | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
-  const router = useRouter()
 
   const track = useQuery(api.tracks.get, { id: trackId as Id<"tracks"> })
   const existingCorners = useQuery(api.corners.listByTrack, { trackId: trackId as Id<"tracks"> })
