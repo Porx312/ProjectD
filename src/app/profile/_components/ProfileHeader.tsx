@@ -4,7 +4,9 @@ import { Activity, Code2, Star, Timer, TrendingUp, Trophy, UserIcon, Zap } from 
 import { motion } from "framer-motion";
 import { Id } from "../../../../convex/_generated/dataModel";
 
-import { UserResource } from "@clerk/types";
+type UserResource = {
+  imageUrl?: string | null;
+};
 
 interface ProfileHeaderProps {
   userStats: {
@@ -87,7 +89,7 @@ function ProfileHeader({ userStats, userData, user }: ProfileHeaderProps) {
           blur-xl opacity-50 group-hover:opacity-75 transition-opacity"
           />
           <img
-            src={user.imageUrl}
+            src={user.imageUrl ?? undefined}
             alt="Profile"
             className="w-24 h-24 rounded-full border-4 border-gray-800/50 relative z-10 group-hover:scale-105 transition-transform"
           />
