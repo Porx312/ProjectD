@@ -51,7 +51,7 @@ export function CornerMarker({
         {/* Corner Marker */}
         <button
           onClick={onClick}
-          className={`relative flex items-center justify-center w-10 h-10 rounded-full font-bold text-sm transition-all ${
+          className={`relative flex items-center justify-center w-4 h-4 rounded-full font-bold text-sm transition-all ${
             isNewPosition
               ? "bg-red-500/50 text-white border-2 border-red-400 border-dashed animate-pulse"
               : isEditing

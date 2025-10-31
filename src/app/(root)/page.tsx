@@ -53,7 +53,7 @@ export default function DashboardPage() {
   console.log(displayedTracks)
 
   return (
-    <main className="min-h-screen bg-[#0a0a0f]">
+    <main className="min-h-screen bg-[#0a0a0f] rounded-md">
       <div className="container mx-auto px-4 py-8">
         {/* Header con filtro */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
