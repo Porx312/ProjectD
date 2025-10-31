@@ -1,20 +1,22 @@
-import { Trash2Icon, UserIcon } from "lucide-react";
-import { Id } from "../../../../../convex/_generated/dataModel";
-import CommentContent from "./CommentContent";
+"use client"
 
+import { Trash2Icon, UserIcon } from "lucide-react"
+import CommentContent from "./CommentContent"
+import { Id } from "../../../../../../convex/_generated/dataModel"
 interface CommentProps {
   comment: {
-    _id: Id<"snippetComments">;
-    _creationTime: number;
-    userId: string;
-    userName: string;
-    snippetId: Id<"snippets">;
-    content: string;
-  };
-  onDelete: (commentId: Id<"snippetComments">) => void;
-  isDeleting: boolean;
-  currentUserId?: string;
+    _id: Id<"trackComments">
+    _creationTime: number
+    userId: string
+    userName: string
+    trackId: Id<"tracks">
+    content: string
+  }
+  onDelete: (commentId: Id<"trackComments">) => void
+  isDeleting: boolean
+  currentUserId?: string
 }
+
 function Comment({ comment, currentUserId, isDeleting, onDelete }: CommentProps) {
   return (
     <div className="group">
@@ -47,6 +49,7 @@ function Comment({ comment, currentUserId, isDeleting, onDelete }: CommentProps)
         <CommentContent content={comment.content} />
       </div>
     </div>
-  );
+  )
 }
-export default Comment;
+
+export default Comment

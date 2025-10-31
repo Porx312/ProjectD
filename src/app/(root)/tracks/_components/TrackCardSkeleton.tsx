@@ -1,37 +1,39 @@
 const CardSkeleton = () => (
   <div className="relative group">
-    <div className="bg-[#1e1e2e]/80 rounded-xl border border-[#313244]/50 overflow-hidden h-[280px]">
+    <div className="bg-[#1e1e2e]/80 rounded-xl border border-[#313244]/50 overflow-hidden">
+      {/* Map image shimmer */}
+      <div className="h-48 w-full bg-gray-800 animate-pulse" />
+
       <div className="p-6 space-y-4">
         {/* Header shimmer */}
         <div className="flex items-start justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-gray-800 animate-pulse" />
-            <div className="space-y-2">
-              <div className="w-24 h-6 bg-gray-800 rounded-lg animate-pulse" />
-              <div className="w-20 h-4 bg-gray-800 rounded-lg animate-pulse" />
-            </div>
+          <div className="flex-1 space-y-3">
+            <div className="w-3/4 h-6 bg-gray-800 rounded-lg animate-pulse" />
+            <div className="w-1/2 h-4 bg-gray-800 rounded-lg animate-pulse" />
           </div>
-          <div className="w-16 h-8 bg-gray-800 rounded-lg animate-pulse" />
+          <div className="flex gap-2">
+            <div className="w-16 h-8 bg-gray-800 rounded-lg animate-pulse" />
+            <div className="w-10 h-8 bg-gray-800 rounded-lg animate-pulse" />
+          </div>
         </div>
 
-        {/* Title shimmer */}
-        <div className="space-y-2">
-          <div className="w-3/4 h-7 bg-gray-800 rounded-lg animate-pulse" />
-          <div className="w-1/2 h-5 bg-gray-800 rounded-lg animate-pulse" />
+        {/* Details shimmer */}
+        <div className="flex gap-4">
+          <div className="w-24 h-5 bg-gray-800 rounded-lg animate-pulse" />
+          <div className="w-20 h-5 bg-gray-800 rounded-lg animate-pulse" />
         </div>
 
-        {/* Code block shimmer */}
-        <div className="space-y-2 bg-black/30 rounded-lg p-4">
-          <div className="w-full h-4 bg-gray-800 rounded animate-pulse" />
-          <div className="w-3/4 h-4 bg-gray-800 rounded animate-pulse" />
-          <div className="w-1/2 h-4 bg-gray-800 rounded animate-pulse" />
+        {/* Stats shimmer */}
+        <div className="flex gap-4 pt-3 border-t border-gray-800">
+          <div className="w-28 h-4 bg-gray-800 rounded-lg animate-pulse" />
+          <div className="w-24 h-4 bg-gray-800 rounded-lg animate-pulse" />
         </div>
       </div>
     </div>
   </div>
-);
+)
 
-export default function SnippetsPageSkeleton() {
+export default function TracksPageSkeleton() {
   return (
     <div className="min-h-screen bg-[#0a0a0f]">
       {/* Ambient background with loading pulse */}
@@ -55,12 +57,12 @@ export default function SnippetsPageSkeleton() {
             <div className="w-full h-14 bg-[#1e1e2e]/80 rounded-xl border border-[#313244] animate-pulse" />
           </div>
 
-          {/* Language filters */}
+          {/* Location filters */}
           <div className="flex flex-wrap gap-2">
             {[...Array(6)].map((_, i) => (
               <div
                 key={i}
-                className="w-24 h-8 bg-gray-800 rounded-lg animate-pulse"
+                className="w-32 h-8 bg-gray-800 rounded-lg animate-pulse"
                 style={{
                   animationDelay: `${i * 100}ms`,
                 }}
@@ -79,5 +81,5 @@ export default function SnippetsPageSkeleton() {
         </div>
       </div>
     </div>
-  );
+  )
 }

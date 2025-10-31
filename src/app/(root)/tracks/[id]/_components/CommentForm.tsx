@@ -1,42 +1,45 @@
-import { CodeIcon, SendIcon } from "lucide-react";
-import { useState } from "react";
-import CommentContent from "./CommentContent";
+"use client"
+
+import type React from "react"
+
+import { CodeIcon, SendIcon } from "lucide-react"
+import { useState } from "react"
+import CommentContent from "./CommentContent"
 
 interface CommentFormProps {
-  onSubmit: (comment: string) => Promise<void>;
-  isSubmitting: boolean;
+  onSubmit: (comment: string) => Promise<void>
+  isSubmitting: boolean
 }
 
 function CommentForm({ isSubmitting, onSubmit }: CommentFormProps) {
-  const [comment, setComment] = useState("");
-  const [isPreview, setIsPreview] = useState(false);
+  const [comment, setComment] = useState("")
+  const [isPreview, setIsPreview] = useState(false)
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Tab") {
-      e.preventDefault();
-      const start = e.currentTarget.selectionStart;
-      const end = e.currentTarget.selectionEnd;
-      const newComment = comment.substring(0, start) + "  " + comment.substring(end);
-      setComment(newComment);
-      e.currentTarget.selectionStart = e.currentTarget.selectionEnd = start + 2;
+      e.preventDefault()
+      const start = e.currentTarget.selectionStart
+      const end = e.currentTarget.selectionEnd
+      const newComment = comment.substring(0, start) + "  " + comment.substring(end)
+      setComment(newComment)
+      e.currentTarget.selectionStart = e.currentTarget.selectionEnd = start + 2
     }
-  };
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    if (!comment.trim()) return;
+    if (!comment.trim()) return
 
-    await onSubmit(comment);
+    await onSubmit(comment)
 
-    setComment("");
-    setIsPreview(false);
-  };
+    setComment("")
+    setIsPreview(false)
+  }
 
   return (
     <form onSubmit={handleSubmit} className="mb-8">
       <div className="bg-[#0a0a0f] rounded-xl border border-[#ffffff0a] overflow-hidden">
-        {/* Comment form header */}
         <div className="flex justify-end gap-2 px-4 pt-2">
           <button
             type="button"
@@ -49,9 +52,8 @@ function CommentForm({ isSubmitting, onSubmit }: CommentFormProps) {
           </button>
         </div>
 
-        {/* Comment form body */}
         {isPreview ? (
-          <div className="min-h-[120px] p-4 text-[#e1e1e3">
+          <div className="min-h-[120px] p-4 text-[#e1e1e3]">
             <CommentContent content={comment} />
           </div>
         ) : (
@@ -65,16 +67,13 @@ function CommentForm({ isSubmitting, onSubmit }: CommentFormProps) {
           />
         )}
 
-        {/* Comment Form Footer */}
         <div className="flex items-center justify-between gap-4 px-4 py-3 bg-[#080809] border-t border-[#ffffff0a]">
           <div className="hidden sm:block text-xs text-[#808086] space-y-1">
             <div className="flex items-center gap-2">
               <CodeIcon className="w-3.5 h-3.5" />
               <span>Format code with ```language</span>
             </div>
-            <div className="text-[#808086]/60 pl-5">
-              Tab key inserts spaces • Preview your comment before posting
-            </div>
+            <div className="text-[#808086]/60 pl-5">Tab key inserts spaces • Preview your comment before posting</div>
           </div>
           <button
             type="submit"
@@ -83,10 +82,7 @@ function CommentForm({ isSubmitting, onSubmit }: CommentFormProps) {
           >
             {isSubmitting ? (
               <>
-                <div
-                  className="w-4 h-4 border-2 border-white/30 
-                border-t-white rounded-full animate-spin"
-                />
+                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                 <span>Posting...</span>
               </>
             ) : (
@@ -99,6 +95,7 @@ function CommentForm({ isSubmitting, onSubmit }: CommentFormProps) {
         </div>
       </div>
     </form>
-  );
+  )
 }
-export default CommentForm;
+
+export default CommentForm

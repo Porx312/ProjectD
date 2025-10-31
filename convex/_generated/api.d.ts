@@ -8,16 +8,21 @@
  * @module
  */
 
+import type * as codeExecutions from "../codeExecutions.js";
+import type * as corners from "../corners.js";
+import type * as http from "../http.js";
+import type * as lemonSqueezy from "../lemonSqueezy.js";
+import type * as profiles from "../profiles.js";
+import type * as snippets from "../snippets.js";
+import type * as tracks from "../tracks.js";
+import type * as userTimes from "../userTimes.js";
+import type * as users from "../users.js";
+
 import type {
   ApiFromModules,
   FilterApi,
   FunctionReference,
 } from "convex/server";
-import type * as codeExecutions from "../codeExecutions.js";
-import type * as http from "../http.js";
-import type * as lemonSqueezy from "../lemonSqueezy.js";
-import type * as snippets from "../snippets.js";
-import type * as users from "../users.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -29,16 +34,24 @@ import type * as users from "../users.js";
  */
 declare const fullApi: ApiFromModules<{
   codeExecutions: typeof codeExecutions;
+  corners: typeof corners;
   http: typeof http;
   lemonSqueezy: typeof lemonSqueezy;
+  profiles: typeof profiles;
   snippets: typeof snippets;
+  tracks: typeof tracks;
+  userTimes: typeof userTimes;
   users: typeof users;
 }>;
+declare const fullApiWithMounts: typeof fullApi;
+
 export declare const api: FilterApi<
-  typeof fullApi,
+  typeof fullApiWithMounts,
   FunctionReference<any, "public">
 >;
 export declare const internal: FilterApi<
-  typeof fullApi,
+  typeof fullApiWithMounts,
   FunctionReference<any, "internal">
 >;
+
+export declare const components: {};

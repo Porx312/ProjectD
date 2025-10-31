@@ -1,49 +1,45 @@
-"use client";
+"use client"
 
-import { useQuery } from "convex/react";
-import { api } from "../../../convex/_generated/api";
-import { useState } from "react";
-import SnippetsPageSkeleton from "./_components/SnippetsPageSkeleton";
-import NavigationHeader from "@/components/NavigationHeader";
+import { useQuery } from "convex/react"
+import { useState } from "react"
 
-import { AnimatePresence, motion } from "framer-motion";
-import { BookOpen, Code, Grid, Layers, Search, Tag, X } from "lucide-react";
-import SnippetCard from "./_components/SnippetCard";
+import { AnimatePresence, motion } from "framer-motion"
+import { Map, Grid, Layers, Search, Tag, X, MapPin } from "lucide-react"
+import TracksPageSkeleton from "./_components/TrackCardSkeleton"
+import TrackCard from "./_components/TrackCard"
+import { api } from "../../../../convex/_generated/api"
 
-function SnippetsPage() {
-  const snippets = useQuery(api.snippets.getSnippets);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
-  const [view, setView] = useState<"grid" | "list">("grid");
+function TracksPage() {
+  const tracks = useQuery(api.tracks.getAllTracks)
+  const [searchQuery, setSearchQuery] = useState("")
+  const [selectedLocation, setSelectedLocation] = useState<string | null>(null)
+  const [view, setView] = useState<"grid" | "list">("grid")
 
   // loading state
-  if (snippets === undefined) {
+  if (tracks === undefined) {
     return (
       <div className="min-h-screen">
-        <NavigationHeader />
-        <SnippetsPageSkeleton />
+        <TracksPageSkeleton/>
       </div>
-    );
+    )
   }
 
-  const languages = [...new Set(snippets.map((s) => s.language))];
-  const popularLanguages = languages.slice(0, 5);
+  const locations = [...new Set(tracks.map((t) => t.location))]
+  const popularLocations = locations.slice(0, 5)
 
-  const filteredSnippets = snippets.filter((snippet) => {
+  const filteredTracks = tracks.filter((track) => {
     const matchesSearch =
-      snippet.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      snippet.language.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      snippet.userName.toLowerCase().includes(searchQuery.toLowerCase());
+      track.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      track.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      track.carModel.toLowerCase().includes(searchQuery.toLowerCase())
 
-    const matchesLanguage = !selectedLanguage || snippet.language === selectedLanguage;
+    const matchesLocation = !selectedLocation || track.location === selectedLocation
 
-    return matchesSearch && matchesLanguage;
-  });
+    return matchesSearch && matchesLocation
+  })
 
   return (
     <div className="min-h-screen bg-[#0a0a0f]">
-      <NavigationHeader />
-
       <div className="relative max-w-7xl mx-auto px-4 py-12">
         {/* Hero */}
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -53,8 +49,8 @@ function SnippetsPage() {
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r
              from-blue-500/10 to-purple-500/10 text-sm text-gray-400 mb-6"
           >
-            <BookOpen className="w-4 h-4" />
-            Community Code Library
+            <Map className="w-4 h-4" />
+            Community Track Library
           </motion.div>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -62,7 +58,7 @@ function SnippetsPage() {
             transition={{ delay: 0.1 }}
             className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-100 to-gray-300 text-transparent bg-clip-text mb-6"
           >
-            Discover & Share Code Snippets
+            Discover & Share Racing Tracks
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
@@ -70,7 +66,7 @@ function SnippetsPage() {
             transition={{ delay: 0.2 }}
             className="text-lg text-gray-400 mb-8"
           >
-            Explore a curated collection of code snippets from the community
+            Explore a curated collection of racing tracks with optimized corners from the community
           </motion.p>
         </div>
 
@@ -85,7 +81,7 @@ function SnippetsPage() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search snippets by title, language, or author..."
+                placeholder="Search tracks by name, location, or car model..."
                 className="w-full pl-12 pr-4 py-4 bg-[#1e1e2e]/80 hover:bg-[#1e1e2e] text-white
                   rounded-xl border border-[#313244] hover:border-[#414155] transition-all duration-200
                   placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
@@ -97,32 +93,32 @@ function SnippetsPage() {
           <div className="flex flex-wrap items-center gap-4">
             <div className="flex items-center gap-2 px-4 py-2 bg-[#1e1e2e] rounded-lg ring-1 ring-gray-800">
               <Tag className="w-4 h-4 text-gray-400" />
-              <span className="text-sm text-gray-400">Languages:</span>
+              <span className="text-sm text-gray-400">Locations:</span>
             </div>
 
-            {popularLanguages.map((lang) => (
+            {popularLocations.map((location) => (
               <button
-                key={lang}
-                onClick={() => setSelectedLanguage(lang === selectedLanguage ? null : lang)}
+                key={location}
+                onClick={() => setSelectedLocation(location === selectedLocation ? null : location)}
                 className={`
                     group relative px-3 py-1.5 rounded-lg transition-all duration-200
                     ${
-                      selectedLanguage === lang
+                      selectedLocation === location
                         ? "text-blue-400 bg-blue-500/10 ring-2 ring-blue-500/50"
                         : "text-gray-400 hover:text-gray-300 bg-[#1e1e2e] hover:bg-[#262637] ring-1 ring-gray-800"
                     }
                   `}
               >
                 <div className="flex items-center gap-2">
-                  <img src={`/${lang}.png`} alt={lang} className="w-4 h-4 object-contain" />
-                  <span className="text-sm">{lang}</span>
+                  <MapPin className="w-4 h-4" />
+                  <span className="text-sm">{location}</span>
                 </div>
               </button>
             ))}
 
-            {selectedLanguage && (
+            {selectedLocation && (
               <button
-                onClick={() => setSelectedLanguage(null)}
+                onClick={() => setSelectedLocation(null)}
                 className="flex items-center gap-1 px-2 py-1 text-xs text-gray-400 hover:text-gray-300 transition-colors"
               >
                 <X className="w-3 h-3" />
@@ -131,9 +127,7 @@ function SnippetsPage() {
             )}
 
             <div className="ml-auto flex items-center gap-3">
-              <span className="text-sm text-gray-500">
-                {filteredSnippets.length} snippets found
-              </span>
+              <span className="text-sm text-gray-500">{filteredTracks.length} tracks found</span>
 
               {/* View Toggle */}
               <div className="flex items-center gap-1 p-1 bg-[#1e1e2e] rounded-lg ring-1 ring-gray-800">
@@ -162,24 +156,22 @@ function SnippetsPage() {
           </div>
         </div>
 
-        {/* Snippets Grid */}
+        {/* Tracks Grid */}
         <motion.div
           className={`grid gap-6 ${
-            view === "grid"
-              ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-              : "grid-cols-1 max-w-3xl mx-auto"
+            view === "grid" ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3" : "grid-cols-1 max-w-3xl mx-auto"
           }`}
           layout
         >
           <AnimatePresence mode="popLayout">
-            {filteredSnippets.map((snippet) => (
-              <SnippetCard key={snippet._id} snippet={snippet} />
+            {filteredTracks.map((track) => (
+              <TrackCard key={track._id} track={track} />
             ))}
           </AnimatePresence>
         </motion.div>
 
         {/* edge case: empty state */}
-        {filteredSnippets.length === 0 && (
+        {filteredTracks.length === 0 && (
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -190,20 +182,20 @@ function SnippetsPage() {
                 className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br 
                 from-blue-500/10 to-purple-500/10 ring-1 ring-white/10 mb-6"
               >
-                <Code className="w-8 h-8 text-gray-400" />
+                <Map className="w-8 h-8 text-gray-400" />
               </div>
-              <h3 className="text-xl font-medium text-white mb-3">No snippets found</h3>
+              <h3 className="text-xl font-medium text-white mb-3">No tracks found</h3>
               <p className="text-gray-400 mb-6">
-                {searchQuery || selectedLanguage
+                {searchQuery || selectedLocation
                   ? "Try adjusting your search query or filters"
-                  : "Be the first to share a code snippet with the community"}
+                  : "Be the first to share a racing track with the community"}
               </p>
 
-              {(searchQuery || selectedLanguage) && (
+              {(searchQuery || selectedLocation) && (
                 <button
                   onClick={() => {
-                    setSearchQuery("");
-                    setSelectedLanguage(null);
+                    setSearchQuery("")
+                    setSelectedLocation(null)
                   }}
                   className="inline-flex items-center gap-2 px-4 py-2 bg-[#262637] text-gray-300 hover:text-white rounded-lg 
                     transition-colors"
@@ -217,6 +209,6 @@ function SnippetsPage() {
         )}
       </div>
     </div>
-  );
+  )
 }
-export default SnippetsPage;
+export default TracksPage
