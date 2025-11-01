@@ -115,7 +115,7 @@ export default function DashboardPage() {
               <>
                 <p className="text-zinc-400 mb-4">You havent saved any tracks yet.</p>
                 <Link
-                  href="/explore"
+                  href="/tracks"
                   className="inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 transition-colors"
                 >
                   Explore Tracks
@@ -133,7 +133,7 @@ export default function DashboardPage() {
                     Create Track
                   </Link>
                   <Link
-                    href="/explore"
+                    href="/tracks"
                     className="px-5 py-2 text-sm bg-zinc-700 text-zinc-200 rounded-md hover:bg-zinc-600"
                   >
                     Explore
