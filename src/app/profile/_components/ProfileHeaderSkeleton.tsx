@@ -53,7 +53,7 @@ function ProfileHeaderSkeleton() {
         ))}
       </div>
     </div>
-  );
+  )
 }
 
-export default ProfileHeaderSkeleton;
+export default ProfileHeaderSkeleton

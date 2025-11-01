@@ -1,80 +1,98 @@
-import { useQuery } from "convex/react";
-import { api } from "../../../../convex/_generated/api";
-import { Activity, Code2, Star, Timer, TrendingUp, Trophy, UserIcon, Zap } from "lucide-react";
-import { motion } from "framer-motion";
-import { Id } from "../../../../convex/_generated/dataModel";
+"use client"
+
+import { Activity, Flag, Timer, TrendingUp, Trophy, UserIcon, Zap, Target } from "lucide-react"
+import { motion } from "framer-motion"
+import type { Id } from "../../../../convex/_generated/dataModel"
 
 type UserResource = {
-  imageUrl?: string | null;
-};
-
-interface ProfileHeaderProps {
-  userStats: {
-    totalExecutions: number;
-    languagesCount: number;
-    languages: string[];
-    last24Hours: number;
-    favoriteLanguage: string;
-    languageStats: Record<string, number>;
-    mostStarredLanguage: string;
-  };
-  userData: {
-    _id: Id<"users">;
-    _creationTime: number;
-    proSince?: number | undefined;
-    lemonSqueezyCustomerId?: string | undefined;
-    lemonSqueezyOrderId?: string | undefined;
-    name: string;
-    userId: string;
-    email: string;
-    isPro: boolean;
-  };
-  user: UserResource;
+  imageUrl?: string | null
 }
 
-function ProfileHeader({ userStats, userData, user }: ProfileHeaderProps) {
-  const starredSnippets = useQuery(api.snippets.getStarredSnippets);
+interface ProfileHeaderProps {
+  userData: {
+    _id: Id<"users">
+    _creationTime: number
+    proSince?: number | undefined
+    lemonSqueezyCustomerId?: string | undefined
+    lemonSqueezyOrderId?: string | undefined
+    name: string
+    userId: string
+    email: string
+    isPro: boolean
+  }
+  user: UserResource
+  userTimes: Array<{
+    _id: Id<"userTimes">
+    _creationTime: number
+    cornerId: Id<"corners">
+    userId: string
+    userTime: number
+    notes?: string
+    corner: {
+      _id: Id<"corners">
+      name: string
+      cornerNumber: number
+      targetTime: number
+    }
+    track: {
+      _id: Id<"tracks">
+      name: string
+      location: string
+      carModel: string
+    }
+  }>
+}
+
+function ProfileHeader({ userData, user, userTimes }: ProfileHeaderProps) {
+  const totalTimes = userTimes.length
+  const bestTime = userTimes.length > 0 ? Math.min(...userTimes.map((t) => t.userTime)) : 0
+  const avgTime = userTimes.length > 0 ? userTimes.reduce((sum, t) => sum + t.userTime, 0) / userTimes.length : 0
+  const recentTimes = userTimes.filter((t) => Date.now() - t._creationTime < 24 * 60 * 60 * 1000).length
+
+  const targetsAchieved = userTimes.filter((t) => t.userTime <= t.corner.targetTime).length
+  const uniqueTracks = new Set(userTimes.map((t) => t.track._id)).size
+
   const STATS = [
     {
-      label: "Code Executions",
-      value: userStats?.totalExecutions ?? 0,
-      icon: Activity,
+      label: "Total Times",
+      value: totalTimes,
+      icon: Timer,
       color: "from-blue-500 to-cyan-500",
       gradient: "group-hover:via-blue-400",
-      description: "Total code runs",
+      description: "Recorded lap times",
       metric: {
         label: "Last 24h",
-        value: userStats?.last24Hours ?? 0,
-        icon: Timer,
+        value: recentTimes,
+        icon: Activity,
       },
     },
     {
-      label: "Starred Snippets",
-      value: starredSnippets?.length ?? 0,
-      icon: Star,
+      label: "Best Time",
+      value: bestTime > 0 ? `${bestTime.toFixed(3)}s` : "N/A",
+      icon: Trophy,
       color: "from-yellow-500 to-orange-500",
       gradient: "group-hover:via-yellow-400",
-      description: "Saved for later",
+      description: "Personal best",
       metric: {
-        label: "Most starred",
-        value: userStats?.mostStarredLanguage ?? "N/A",
-        icon: Trophy,
-      },
-    },
-    {
-      label: "Languages Used",
-      value: userStats?.languagesCount ?? 0,
-      icon: Code2,
-      color: "from-purple-500 to-pink-500",
-      gradient: "group-hover:via-purple-400",
-      description: "Different languages",
-      metric: {
-        label: "Most used",
-        value: userStats?.favoriteLanguage ?? "N/A",
+        label: "Average",
+        value: avgTime > 0 ? `${avgTime.toFixed(3)}s` : "N/A",
         icon: TrendingUp,
       },
     },
-  ];
+    {
+      label: "Targets Hit",
+      value: `${targetsAchieved}/${totalTimes}`,
+      icon: Target,
+      color: "from-green-500 to-emerald-500",
+      gradient: "group-hover:via-green-400",
+      description: "Times under target",
+      metric: {
+        label: "Unique tracks",
+        value: uniqueTracks,
+        icon: Flag,
+      },
+    },
+  ]
 
   return (
     <div
@@ -165,6 +183,6 @@ function ProfileHeader({ userStats, userData, user }: ProfileHeaderProps) {
         ))}
       </div>
     </div>
-  );
+  )
 }
-export default ProfileHeader;
+export default ProfileHeader
