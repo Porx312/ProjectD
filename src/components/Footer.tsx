@@ -1,4 +1,4 @@
-import { Flag, Gauge, Github, Blocks } from "lucide-react";
+import { Flag, Gauge} from "lucide-react";
 import Link from "next/link";
 
 function Footer() {
